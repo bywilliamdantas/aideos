@@ -34,7 +34,7 @@ aide-os/
 ## Status do desenvolvimento
 
 - [x] Etapa 1 — Base do app (tela inicial, roteamento, nome persistente, estrutura de arquivos)
-- [ ] Etapa 2 — Módulo de Encerramento + correção do texto de franquia do repetidor (2.0/3.0 x 4.0)
+- [x] Etapa 2 — Módulo de Encerramento + correção do texto de franquia do repetidor (2.0/3.0 x 4.0)
 - [ ] Etapa 3 — Correção da Classificação (Andamento x Encerramento)
 - [ ] Etapa 4 — Módulo de Solicitação Infraestrutura
 - [ ] Etapa 5 — Fechamento do PWA (ícones, service worker, testes finais)
