@@ -35,6 +35,6 @@ aide-os/
 
 - [x] Etapa 1 — Base do app (tela inicial, roteamento, nome persistente, estrutura de arquivos)
 - [x] Etapa 2 — Módulo de Encerramento + correção do texto de franquia do repetidor (2.0/3.0 x 4.0)
-- [ ] Etapa 3 — Correção da Classificação (Andamento x Encerramento)
-- [ ] Etapa 4 — Módulo de Solicitação Infraestrutura
+- [x] Etapa 3 — Correção/validação da Classificação (Andamento x Encerramento) — auditados os 13 tipos de atendimento
+- [x] Etapa 4 — Módulo de Solicitação Infraestrutura (migrado do relatorio-infra, técnico e histórico unificados)
 - [ ] Etapa 5 — Fechamento do PWA (ícones, service worker, testes finais)
