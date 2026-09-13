@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="AIDE OS">
+<meta name="theme-color" content="#000000">
+<meta name="description" content="AIDE OS — Gerencie encerramentos de atendimento e solicitações de infraestrutura em um único app.">
+<title>AIDE OS</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" href="icons/icon-192.png">
+<style>
+  :root{
+    --bg:#000000;
+    --card-top:#1b1b1b;
+    --card-bottom:#0a0a0a;
+    --card-border:rgba(255,255,255,0.06);
+    --text-primary:#f5f5f5;
+    --text-muted:#6b6b6b;
+    --text-label:#8a8a8a;
+    --danger:#ff453a;
+    --ok:#30d158;
+    --accent:#ff5a1f;
+    --accent-soft:rgba(255,90,31,0.14);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{
+    margin:0;padding:0;
+    background:var(--bg);
+    min-height:100vh;
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display",system-ui,sans-serif;
+    color:var(--text-primary);
+    display:flex;justify-content:center;
+    padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom) 0;
+  }
+  .screen{ width:100%; max-width:430px; padding:28px 20px 40px; }
+
+  .hero{ display:flex; justify-content:center; margin:10px 0 18px; }
+  .hero svg{ width:88px; height:88px; }
+
+  .title{ font-size:30px; font-weight:800; text-align:center; margin:0 0 10px; letter-spacing:-0.01em; }
+  .title .accent{ color:var(--accent); }
+
+  .subtitle{ font-size:14px; color:var(--text-muted); text-align:center; line-height:1.5; margin:0 0 28px; padding:0 8px; }
+
+  .option{
+    display:flex; align-items:center; gap:14px;
+    background:linear-gradient(165deg,var(--card-top),var(--card-bottom) 70%);
+    border:1.5px solid var(--card-border);
+    border-radius:22px;
+    padding:18px 18px;
+    margin-bottom:14px;
+    cursor:pointer;
+    -webkit-appearance:none;
+    text-align:left;
+    width:100%;
+    font-family:inherit;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .option.selected{
+    border-color:var(--accent);
+    background:linear-gradient(165deg,#241a12,#120c08 70%);
+  }
+  .option-icon{
+    flex-shrink:0;
+    width:58px; height:58px; border-radius:16px;
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.06);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .option-icon svg{ width:28px; height:28px; }
+  .option-body{ flex:1; min-width:0; }
+  .option-title{ font-size:16.5px; font-weight:800; line-height:1.25; margin:0 0 4px; }
+  .option-desc{ font-size:12.5px; color:var(--text-muted); line-height:1.4; margin:0; }
+  .option-radio{
+    flex-shrink:0; width:24px; height:24px; border-radius:50%;
+    border:2px solid #4a4a4a;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .option.selected .option-radio{ border-color:var(--accent); }
+  .option-radio-dot{ width:12px; height:12px; border-radius:50%; background:var(--accent); display:none; }
+  .option.selected .option-radio-dot{ display:block; }
+
+  .name-section{ margin-top:22px; }
+  .name-label{
+    display:flex; align-items:center; gap:7px;
+    font-size:13px; font-weight:700; color:var(--text-primary);
+    margin:0 0 8px 4px;
+  }
+  .name-label svg{ width:15px; height:15px; }
+  .name-input{
+    width:100%;
+    background:rgba(255,255,255,0.04);
+    border:1.5px solid rgba(255,255,255,0.1);
+    color:var(--text-primary);
+    border-radius:14px;
+    padding:15px 16px;
+    font-size:15px;
+    font-family:inherit;
+    -webkit-appearance:none;
+  }
+  .name-input::placeholder{ color:var(--text-muted); }
+  .name-input.invalid{ border-color:var(--danger); }
+  .name-hint{
+    display:flex; gap:7px; align-items:flex-start;
+    font-size:11.5px; color:var(--text-muted); line-height:1.5;
+    margin:10px 4px 0;
+  }
+  .name-hint svg{ width:14px; height:14px; flex-shrink:0; margin-top:1px; color:var(--accent); }
+
+  .greeting-row{
+    display:flex; align-items:center; justify-content:space-between;
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.06);
+    border-radius:14px;
+    padding:13px 16px;
+    margin-top:22px;
+  }
+  .greeting-text{ font-size:13.5px; color:var(--text-label); }
+  .greeting-text b{ color:var(--text-primary); }
+  .change-name-btn{
+    background:none; border:none; color:var(--accent);
+    font-size:12.5px; font-weight:700; font-family:inherit;
+    padding:4px 0; -webkit-appearance:none;
+  }
+
+  .continue-btn{
+    width:100%;
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    background:linear-gradient(165deg,#ff7a3d,#ff5a1f);
+    color:#141005;
+    font-size:16px; font-weight:800;
+    border:none; border-radius:18px;
+    padding:17px 20px;
+    margin-top:26px;
+    font-family:inherit;
+    -webkit-appearance:none;
+    box-shadow:0 12px 28px rgba(255,90,31,0.28);
+  }
+  .continue-btn:active{ filter:brightness(0.94); }
+  .continue-btn svg{ width:18px; height:18px; }
+  .continue-btn:disabled{ opacity:0.5; box-shadow:none; }
+</style>
+</head>
+<body>
+<div class="screen">
+
+  <div class="hero">
+    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M32 12h24l14 14v50a6 6 0 0 1-6 6H32a6 6 0 0 1-6-6V18a6 6 0 0 1 6-6z" stroke="#ff5a1f" stroke-width="3.4" stroke-linejoin="round"/>
+      <path d="M56 12v12a4 4 0 0 0 4 4h10" stroke="#ff5a1f" stroke-width="3.4" stroke-linejoin="round"/>
+      <path d="M34 40h20M34 50h14" stroke="#ff5a1f" stroke-width="3.4" stroke-linecap="round"/>
+      <circle cx="66" cy="62" r="17" fill="#000" stroke="#ff5a1f" stroke-width="3.4"/>
+      <path d="M59 62.5l4.5 4.5L74 56" stroke="#ff5a1f" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+
+  <h1 class="title"><span id="titleWhite">Bem-</span><span class="accent">vindo!</span></h1>
+  <p class="subtitle" id="subtitle">Escolha a opção desejada para continuar<br>e informe seu nome no primeiro acesso.</p>
+
+  <button type="button" class="option selected" data-modulo="encerramento" id="optEncerramento">
+    <span class="option-icon">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 4h8a1 1 0 0 1 1 1v1h1a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h1V5a1 1 0 0 1 1-1z" stroke="#ff5a1f" stroke-width="1.8" stroke-linejoin="round"/>
+        <path d="M9 6h6" stroke="#ff5a1f" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M8.5 13.5l2 2 4.5-4.5" stroke="#ff5a1f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M8.5 18h6" stroke="#ff5a1f" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </span>
+    <span class="option-body">
+      <p class="option-title">Gerenciamento de Encerramento</p>
+      <p class="option-desc">Acompanhe e gerencie o encerramento das atividades.</p>
+    </span>
+    <span class="option-radio"><span class="option-radio-dot"></span></span>
+  </button>
+
+  <button type="button" class="option" data-modulo="infraestrutura" id="optInfraestrutura">
+    <span class="option-icon">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 3v6" stroke="#ff5a1f" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M7 21l3-11h4l3 11" stroke="#ff5a1f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M6 21h12" stroke="#ff5a1f" stroke-width="1.8" stroke-linecap="round"/>
+        <circle cx="12" cy="9" r="1.4" fill="#ff5a1f"/>
+        <path d="M9 6.2a4.4 4.4 0 0 1 6 0" stroke="#ff5a1f" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M6.8 4a7.6 7.6 0 0 1 10.4 0" stroke="#ff5a1f" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+    </span>
+    <span class="option-body">
+      <p class="option-title">Solicitação Infraestrutura</p>
+      <p class="option-desc">Solicite e acompanhe demandas de infraestrutura.</p>
+    </span>
+    <span class="option-radio"><span class="option-radio-dot"></span></span>
+  </button>
+
+  <div class="name-section" id="nameSection">
+    <p class="name-label">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="3.6" stroke="#ff5a1f" stroke-width="1.8"/><path d="M4.5 20c1.2-4 4-6 7.5-6s6.3 2 7.5 6" stroke="#ff5a1f" stroke-width="1.8" stroke-linecap="round"/></svg>
+      Nome
+    </p>
+    <input type="text" id="nomeInput" class="name-input" placeholder="Digite seu nome" autocomplete="off">
+    <p class="name-hint">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 11v5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="7.8" r="1" fill="currentColor"/></svg>
+      Este nome será utilizado nas próximas páginas como nome do técnico.
+    </p>
+  </div>
+
+  <div class="greeting-row" id="greetingRow" style="display:none;">
+    <span class="greeting-text">Olá, <b id="greetingName"></b></span>
+    <button type="button" class="change-name-btn" id="changeNameBtn">Trocar</button>
+  </div>
+
+  <button type="button" class="continue-btn" id="continueBtn">
+    Continuar
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+
+</div>
+
+<script>
+const TECNICO_KEY = "aide-os-tecnico";
+const MODULOS = {
+  encerramento: "modulos/encerramento/index.html",
+  infraestrutura: "modulos/infraestrutura/index.html"
+};
+
+let state = {
+  moduloSelecionado: "encerramento",
+  editingName: false
+};
+
+function getTecnico(){
+  try{ return (window.localStorage.getItem(TECNICO_KEY) || "").trim(); }
+  catch(e){ return ""; }
+}
+function setTecnico(nome){
+  try{ window.localStorage.setItem(TECNICO_KEY, nome); }
+  catch(e){}
+}
+
+function render(){
+  const nome = getTecnico();
+  const isFirstAccess = !nome || state.editingName;
+
+  document.getElementById("nameSection").style.display = isFirstAccess ? "block" : "none";
+  document.getElementById("greetingRow").style.display = (!isFirstAccess) ? "flex" : "none";
+
+  if(!isFirstAccess){
+    document.getElementById("greetingName").textContent = nome;
+  } else {
+    document.getElementById("nomeInput").value = state.editingName ? nome : "";
+  }
+
+  document.getElementById("subtitle").innerHTML = isFirstAccess
+    ? "Escolha a opção desejada para continuar<br>e informe seu nome no primeiro acesso."
+    : "Escolha a opção desejada para continuar.";
+
+  document.querySelectorAll(".option").forEach(btn => {
+    btn.classList.toggle("selected", btn.dataset.modulo === state.moduloSelecionado);
+  });
+}
+
+document.querySelectorAll(".option").forEach(btn => {
+  btn.addEventListener("click", () => {
+    state.moduloSelecionado = btn.dataset.modulo;
+    render();
+  });
+});
+
+document.getElementById("changeNameBtn").addEventListener("click", () => {
+  state.editingName = true;
+  render();
+  document.getElementById("nomeInput").focus();
+});
+
+document.getElementById("nomeInput").addEventListener("input", () => {
+  document.getElementById("nomeInput").classList.remove("invalid");
+});
+
+document.getElementById("continueBtn").addEventListener("click", () => {
+  const nomeSalvo = getTecnico();
+  const precisaNome = !nomeSalvo || state.editingName;
+
+  if(precisaNome){
+    const valor = document.getElementById("nomeInput").value.trim();
+    if(!valor){
+      document.getElementById("nomeInput").classList.add("invalid");
+      document.getElementById("nomeInput").focus();
+      return;
+    }
+    setTecnico(valor);
+    state.editingName = false;
+  }
+
+  const destino = MODULOS[state.moduloSelecionado];
+  window.location.href = destino;
+});
+
+render();
+
+if("serviceWorker" in navigator){
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js").catch(() => {});
+  });
+}
+</script>
+</body>
+</html>
