@@ -143,6 +143,15 @@
   .continue-btn:active{ filter:brightness(0.94); }
   .continue-btn svg{ width:18px; height:18px; }
   .continue-btn:disabled{ opacity:0.5; box-shadow:none; }
+
+  .history-link{
+    display:flex; align-items:center; justify-content:center; gap:7px;
+    color:var(--text-muted); text-decoration:none;
+    font-size:12.5px; font-weight:700;
+    margin-top:18px; padding:6px 0;
+  }
+  .history-link svg{ width:15px; height:15px; }
+  .history-link:active{ color:var(--accent); }
 </style>
 </head>
 <body>
@@ -216,6 +225,11 @@
     Continuar
     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </button>
+
+  <a href="historico.html" class="history-link">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 12a9 9 0 1 0 3-6.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M3 4v5h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 8v4.5l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Ver histórico de atendimentos
+  </a>
 
 </div>
 

@@ -1,10 +1,12 @@
-const CACHE_NAME = "aide-os-v1";
+const CACHE_NAME = "aide-os-v2";
 const ASSETS = [
   "./",
   "./index.html",
+  "./historico.html",
   "./manifest.json",
   "./icons/icon-192.png",
   "./icons/icon-512.png",
+  "./icons/icon-maskable-512.png",
   "./icons/apple-touch-icon.png",
   "./modulos/encerramento/index.html",
   "./modulos/infraestrutura/index.html"

@@ -45,6 +45,16 @@
   .back-link svg{ width:14px; height:14px; }
   .back-link:active{ color:var(--accent); }
 
+  .top-row{ display:flex; align-items:center; justify-content:space-between; }
+  .history-link{
+    display:inline-flex; align-items:center; gap:5px;
+    color:var(--text-muted); text-decoration:none;
+    font-size:12.5px; font-weight:700;
+    margin:0 4px 14px;
+  }
+  .history-link svg{ width:14px; height:14px; }
+  .history-link:active{ color:var(--accent); }
+
   .page-title{ font-size:22px; font-weight:800; margin:6px 4px 4px; }
   .page-sub{ font-size:12.5px; color:var(--text-muted); margin:0 4px 18px; }
 
@@ -251,10 +261,16 @@
 </head>
 <body>
 <div class="screen">
-  <a href="../../index.html" class="back-link">
-    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    Início
-  </a>
+  <div class="top-row">
+    <a href="../../index.html" class="back-link">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Início
+    </a>
+    <a href="../../historico.html" class="history-link">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 12a9 9 0 1 0 3-6.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M3 4v5h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 8v4.5l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Histórico
+    </a>
+  </div>
   <div class="sync-row hidden" id="syncRow">
     <span class="sync-dot" id="syncDot"></span>
     <span id="syncText"></span>
